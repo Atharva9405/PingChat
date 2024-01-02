@@ -1,3 +1,4 @@
+import Avatar from "@/components/common/Avatar";
 import Input from "@/components/common/Input";
 import { useStateProvider } from "@/context/StateContext";
 import Image from "next/image";
@@ -21,6 +22,7 @@ function onboarding() {
           <Input name='Display Name' state={name} setState={setName} label />
           <Input name='About' state={about} setState={setAbout} label />
         </div>
+        <Avatar type="xl" image={image} setImage={setImage} />
       </div>
     </div>
   );
