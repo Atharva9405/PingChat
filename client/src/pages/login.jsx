@@ -6,9 +6,12 @@ import { firebaseAuth } from "@/utils/FirebaseConfig";
 import axios from "axios";
 import { CHECK_USER_ROUTE } from "@/utils/ApiRoutes";
 import { useRouter } from "next/router";
+import { useStateProvider } from "@/context/StateContext";
 
 function login() {
   const router = useRouter();
+
+  const [{},dispatch] = useStateProvider();
 
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
