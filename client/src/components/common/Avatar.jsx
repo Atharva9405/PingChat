@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import ContextMenu from "./ContextMenu";
 import PhotoPicker from "./PhotoPicker";
+import PhotoLibrary from "./PhotoLibrary";
 
 function Avatar({ type, image, setImage }) {
   const [hover, setHover] = useState(false);
@@ -12,6 +13,7 @@ function Avatar({ type, image, setImage }) {
     y: 0,
   });
   const [grabPhoto, setGrabPhoto] = useState(false);
+  const [showPhotoLibrary, setShowPhotoLibrary] = useState(false);
 
   useEffect(() => {
     if (grabPhoto) {
@@ -19,15 +21,20 @@ function Avatar({ type, image, setImage }) {
       data.click();
       document.body.onfocus = (e) => {
         setTimeout(() => {
-          setGrabPhoto(false)
-        },1000)
+          setGrabPhoto(false);
+        }, 1000);
       };
     }
   }, [grabPhoto]);
 
   const contextMenuOptions = [
     { name: "Take Photo", callback: () => {} },
-    { name: "Choose From Library", callback: () => {} },
+    {
+      name: "Choose From Library",
+      callback: () => {
+        setShowPhotoLibrary(true);
+      },
+    },
     {
       name: "Upload Photo",
       callback: () => {
@@ -56,10 +63,10 @@ function Avatar({ type, image, setImage }) {
       data.src = event.target.result;
       data.setAttribute("data-src", event.target.result);
     };
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
     setTimeout(() => {
-      setImage(data.src)
-    },100)
+      setImage(data.src);
+    }, 100);
   };
 
   return (
@@ -111,6 +118,7 @@ function Avatar({ type, image, setImage }) {
           setContextMenu={setisContextMenuVisible}
         />
       )}
+      {showPhotoLibrary && <PhotoLibrary setImage={setImage} hidePhotoLibrary={setShowPhotoLibrary} />}
       {grabPhoto && <PhotoPicker onChange={photoPickerChange} />}
     </>
   );
